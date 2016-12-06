@@ -2,13 +2,13 @@ from mechanize import Browser
 import cookielib
 import csv
 import sys
-
+from bs4 import BeautifulSoup
 
 count=0
 file = open('PlacementData.csv', 'w')
 try:
     writer = csv.writer(file)
-    writer.writerow( ('NameOfTheCompany', 'NatureOfBusiness', 'JobDesignation','Eligibility', 'CTC') )
+    writer.writerow(('NameOfTheCompany', 'NatureOfBusiness', 'JobDesignation','Eligibility', 'CTC'))
 
     with open('Comapnies_links.csv', 'rb') as f:
         reader = csv.reader(f)
@@ -35,8 +35,8 @@ try:
 
                 # Spot the name of the inputs of the form that you want to fill, 
                 # say "username" and "password"
-                br.form["userlogin_session[login]"] = ""
-                br.form["userlogin_session[password]"] = ""
+                br.form["userlogin_session[login]"] = "<username>"
+                br.form["userlogin_session[password]"] = "<password>"
 
                 response = br.submit()
                 myhtml=response.read()
@@ -44,23 +44,20 @@ try:
                 # print html
 
                 #For downlaoding the html pages
-                # filename=row[1]
-                # Html_file= open(filename,"w")
-                # Html_file.write(myhtml)
-                # Html_file.close()
+                filename=row[1]
+                Html_file= open(filename,"w")
+                Html_file.write(myhtml)
+                Html_file.close()
 
-                from bs4 import BeautifulSoup
                 soup = BeautifulSoup(myhtml,"lxml")
 
                 td_list = soup.find_all('td')
-
 
                 i = 0
                 for elem in td_list:
                     if elem.text == 'Name of the Company':
                         ind = i
                     i += 1
-
 
                 NameOfTheCompany= td_list[ind+2].text
                 NatureOfBusiness=td_list[ind+5].text
@@ -72,11 +69,8 @@ try:
                         ind = i
                     i += 1
 
-
-
                 # Eligibility=(td_list[ind+2].contents[0])+(td_list[ind+2].contents[1])+(td_list[ind+2].contents[2])
                 Eligibility=td_list[ind+2].text
-
 
                 i = 0
                 for elem in td_list:
@@ -87,13 +81,7 @@ try:
                 CTC=td_list[ind+7].text
 
                 writer.writerow( (NameOfTheCompany, NatureOfBusiness, JobDesignation,Eligibility,CTC) )
-
-            
-            
             except :
                 pass
-
-
-        
 finally:
     file.close()
