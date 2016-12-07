@@ -24,8 +24,8 @@ with session() as c:
 	payload = {
 	'action' : 'login',
 	'authenticity_token': csrftoken,
-	'userlogin_session[login]': 'durgeshk',
-	'userlogin_session[password]': 'Durgesh@23'
+	'userlogin_session[login]': '<username>',
+	'userlogin_session[password]': '<password>'
 	}
 		
 	c.post('http://placement.iitk.ac.in/pas/userlogin_sessions', data = payload, headers= {"Referer": "http://placement.iitk.ac.in"})
