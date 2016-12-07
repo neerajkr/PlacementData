@@ -24,8 +24,8 @@ with session() as c:
 	payload = {
 	'action' : 'login',
 	'authenticity_token': csrftoken,
-	'userlogin_session[login]': '<username>',
-	'userlogin_session[password]': '<password>'
+	'userlogin_session[login]': 'durgeshk',
+	'userlogin_session[password]': 'Durgesh@23'
 	}
 		
 	c.post('http://placement.iitk.ac.in/pas/userlogin_sessions', data = payload, headers= {"Referer": "http://placement.iitk.ac.in"})
@@ -64,7 +64,7 @@ with session() as c:
 			for elem in td_list:
 				if elem.text == 'Name of the Company':
 					ind = i
-					break
+					#break
 				i += 1
 
 			NameOfTheCompany= td_list[ind+2].text
@@ -75,7 +75,7 @@ with session() as c:
 			for elem in td_list:
 				if elem.text == 'Eligibility':
 					ind = i
-					break
+					#break
 				i += 1
 
 			# Eligibility=(td_list[ind+2].contents[0])+(td_list[ind+2].contents[1])+(td_list[ind+2].contents[2])
@@ -85,7 +85,7 @@ with session() as c:
 			for elem in td_list:
 				if elem.text == 'Total cost to Company':
 					ind = i
-					break
+					#break
 			i += 1
 
 			CTC = td_list[ind+7].text
